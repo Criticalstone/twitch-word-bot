@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Model {
   private final Map<String, Long> wordList;
@@ -42,11 +39,13 @@ public class Model {
     }
   }
 
+  /*
   public long getHighestCount() {
-    final List<Long> counts = wordList.values();
+    Collection<Long> counts = new ArrayList<>(wordList.values());
     Collections.sort(counts);
-    return counts.get(counts.size() -1);
+    return counts.get(counts.size());
   }
+
 
   public String[] getMostCountedWords() {
     List<String> words = new ArrayList<>();
@@ -65,7 +64,7 @@ public class Model {
 
     return wordsArray;
   }
-
+*/
   public void addListener(OnModelDataChangedListener listener) {
     if (listener != null) {
       listeners.add(listener);

@@ -9,7 +9,7 @@ public class Twiddler extends PircBot{
     private Model model;
     private Random rand;
     public Twiddler(Model model){
-        this.setName("GenericRussian3");
+        this.setName("Twiddler123");
         this.model = model;
         this.rand = new Random();
     }
@@ -20,6 +20,10 @@ public class Twiddler extends PircBot{
         if(message.equals("bark")){
             randomDelay();
             sendMessage(channel, "Hi " + sender + "!");
+        }
+
+        if(message.equals("dc")){
+            disconnect();
         }
 
         model.addSentence(message);
@@ -37,5 +41,9 @@ public class Twiddler extends PircBot{
         }catch (InterruptedException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public void disconnect1(){
+        disconnect();
     }
 }
