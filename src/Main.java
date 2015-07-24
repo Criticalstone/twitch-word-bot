@@ -9,20 +9,20 @@ import java.util.Scanner;
 public class Main{
 
     private Twiddler twiddler;
+    private Model model;
 
     public Main() {
-        Model model = new Model();
+        this.model = new Model();
         this.twiddler = new Twiddler(model);
 
         try {
-            //twiddler.connect("irc.twitch.tv", 6667, "oauth:ickib8fp0msgt3le4zca7vxg31825j");
-            twiddler.connect("irc.freenode.net");
+            twiddler.connect("irc.twitch.tv", 6667, "oauth:ickib8fp0msgt3le4zca7vxg31825j");
+            //twiddler.connect("irc.freenode.net");
         }catch(IOException | IrcException e){
             System.out.println(e.getMessage());
         }
 
-        twiddler.joinChannel("#hej");
-        twiddler.sendMessage("#hej", "Hello! :)");
+        twiddler.joinChannel("#nightblue3");
 
         getInput();
     }
@@ -45,12 +45,31 @@ public class Main{
 
     private void handleInput(String input) {
         if (input.equals("disconnect")) {
-            twiddler.disconnect1();
+            twiddler.disconnect();
         }
         if (input.startsWith("sendmessage")){
             String[] inputArray = input.split(" ", 2);
             if(inputArray.length > 1)
                 twiddler.sendMessage("#hej", inputArray[1]);
         }
+        if (input.equals("stats")){
+            System.out.println(model.getStatsFormatted());
+        }
+        if (input.equals("muw")){
+            for(String string: model.getMostCountedWords()){
+                System.out.println(string + " : " + model.getCountForWord(string));
+            }
+        }
+        if (input.startsWith("count")){
+            String[] inputArray = input.split(" ", 2);
+            if(inputArray.length > 1)
+                System.out.println(inputArray[1] + " : " + model.getCountForWord(inputArray[1]));
+        }
     }
 }
+
+//TODO: To lower on all words
+//TODO: Save event stats
+//TODO: top ten words
+//TODO: Sort stats on value
+
