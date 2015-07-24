@@ -43,13 +43,11 @@ public class Model {
         }
     }
 
-
     public long getHighestCount() {
         List<Long> counts = new ArrayList<>(wordList.values());
         Collections.sort(counts);
         return counts.get(counts.size()-1);
     }
-
 
     public String[] getMostCountedWords() {
         List<String> words = new ArrayList<>();
@@ -109,11 +107,42 @@ public class Model {
         }
     }
 
+    public TreeMap<String, Long> getSortedStats(){
+        ValueComparator vc = new ValueComparator(wordList);
+        TreeMap<String, Long> sortedStats = new TreeMap<>(vc);
+        sortedStats.putAll(wordList);
+        return sortedStats;
+    }
+
+    public String getSortedStatsFormatted(){
+        String stats = "";
+        for(String string: getSortedStats().descendingKeySet()){
+            stats += string + " : " + getCountForWord(string) + "\n";
+        }
+        return stats;
+    }
+
     public String getStatsFormatted(){
         String stats = "";
         for(String string: getWordList().keySet()){
             stats += string + " : " + getCountForWord(string) + "\n";
         }
         return stats;
+    }
+}
+
+class ValueComparator implements Comparator<String> {
+    Map<String, Long> base;
+    public ValueComparator(Map<String, Long> base) {
+        this.base = base;
+    }
+
+    @Override
+    public int compare(String a, String b) {
+        if(base.get(a) >= base.get(b)) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

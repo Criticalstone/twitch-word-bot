@@ -53,7 +53,7 @@ public class Main{
                 twiddler.sendMessage("#hej", inputArray[1]);
         }
         if (input.equals("stats")){
-            System.out.println(model.getStatsFormatted());
+            System.out.println(model.getSortedStatsFormatted());
         }
         if (input.equals("muw")){
             for(String string: model.getMostCountedWords()){
