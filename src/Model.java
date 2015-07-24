@@ -43,9 +43,9 @@ public class Model {
   }
 
   public long getHighestCount() {
-    Collection<Long> counts = new Collection(wordList.values());
+    final List<Long> counts = wordList.values();
     Collections.sort(counts);
-    return counts.get(counts.size());
+    return counts.get(counts.size() -1);
   }
 
   public String[] getMostCountedWords() {
