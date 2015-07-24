@@ -9,7 +9,7 @@ public class Twiddler extends PircBot{
     private Model model;
     private Random rand;
     public Twiddler(Model model){
-        this.setName("Twiddler123");
+        this.setName("GenericRussian3");
         this.model = model;
         this.rand = new Random();
     }
@@ -27,12 +27,7 @@ public class Twiddler extends PircBot{
         }
 
         model.addSentence(message);
-        /*
-        for(String string: model.getWordList().keySet()){
-            System.out.println("#######################################################################");
-            System.out.println(string + " : " + model.getCountForWord(string));
-            System.out.println("#######################################################################");
-        }*/
+
     }
 
     public void randomDelay(){
@@ -43,7 +38,10 @@ public class Twiddler extends PircBot{
         }
     }
 
-    public void disconnect1(){
-        disconnect();
+    @Override
+    protected void onDisconnect() {
+        super.onDisconnect();
+        model.save();
+        System.exit(0);
     }
 }
