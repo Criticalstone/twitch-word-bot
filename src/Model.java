@@ -37,6 +37,30 @@ public class Model {
     }
   }
 
+  public long getHighestCount() {
+    Collection<Long> counts = new Collection(wordList.values());
+    Collections.sort(counts);
+    return counts.get(counts.size());
+  }
+
+  public String[] getMostCountedWords() {
+    List<String> words = new ArrayList<>();
+    long highestCount = getHighestCount();
+
+    for (String word : wordList.keySet()) {
+      if (wordList.get(word) == highestCount) {
+        words.add(word);
+      }
+    }
+
+    String[] wordsArray = new String[words.size()];
+    for (int i = 0; i < words.size(); i++) {
+      wordsArray[i] = words.get(i);
+    }
+
+    return wordsArray;
+  }
+
   public void addListener(OnModelDataChangedListener listener) {
     if (listener != null) {
       listeners.add(listener);
