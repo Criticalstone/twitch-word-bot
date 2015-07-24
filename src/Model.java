@@ -1,5 +1,10 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 public class Model {
-  private final Map<String, long> wordList;
+  private final Map<String, Long> wordList;
   private final Set<OnModelDataChangedListener> listeners;
 
   public Model() {
@@ -8,16 +13,16 @@ public class Model {
   }
 
   public void addWord(String word) {
-    if (wordList.containtKey(word)) {
+    if (wordList.containsKey(word)) {
       long count = wordList.get(word);
       wordList.put(word, ++count);
     } else {
-      wordList.put(word, 1);
+      wordList.put(word, 1l);
     }
   }
 
-  public Map<String, long> getWordList() {
-    return this.wordList();
+  public Map<String, Long> getWordList() {
+    return this.wordList;
   }
 
   public long getCountForWord(String word) {
@@ -29,7 +34,7 @@ public class Model {
   }
 
   public void addSentence(String sentence) {
-    String[] words = sentence.split(' ');
+    String[] words = sentence.split(" ");
     if (words.length > 0) {
       for (String word : words) {
         addWord(word);
@@ -77,7 +82,7 @@ public class Model {
     }
   }
 
-  public isListenerAdded(OnModelDataChangedListener listener) {
+  public boolean isListenerAdded(OnModelDataChangedListener listener, Map<String, Long> wordList) {
     return listeners.contains(listener);
   }
 
