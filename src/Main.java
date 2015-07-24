@@ -22,7 +22,7 @@ public class Main{
             System.out.println(e.getMessage());
         }
 
-        twiddler.joinChannel("#nightblue3");
+        twiddler.joinChannel("#smitegame");
 
         getInput();
     }
@@ -68,7 +68,6 @@ public class Main{
     }
 }
 
-//TODO: To lower on all words
 //TODO: Save event stats
 //TODO: top ten words
 //TODO: Sort stats on value

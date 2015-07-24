@@ -13,6 +13,7 @@ public class Model {
     }
 
     public void addWord(String word) {
+        word = word.toLowerCase();
         if (wordList.containsKey(word)) {
             long count = wordList.get(word);
             wordList.put(word, ++count);
