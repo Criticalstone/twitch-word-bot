@@ -44,27 +44,34 @@ public class Main{
     }
 
     private void handleInput(String input) {
-        if (input.equals("disconnect")) {
+        if (input.equals("dc")) {
             twiddler.disconnect();
-        }
-        if (input.startsWith("sendmessage")){
+        } else if (input.startsWith("sendmessage")){
             String[] inputArray = input.split(" ", 2);
             if(inputArray.length > 1)
                 twiddler.sendMessage("#hej", inputArray[1]);
-        }
-        if (input.equals("stats")){
+        } else if (input.equals("stats")){
             System.out.println(model.getSortedStatsFormatted());
-        }
-        if (input.equals("muw")){
+        } else if (input.equals("muw")){
             for(String string: model.getMostCountedWords()){
                 System.out.println(string + " : " + model.getCountForWord(string));
             }
-        }
-        if (input.startsWith("count")){
+        } else if (input.startsWith("count")){
             String[] inputArray = input.split(" ", 2);
             if(inputArray.length > 1)
                 System.out.println(inputArray[1] + " : " + model.getCountForWord(inputArray[1]));
+        } else if (input.equals("tt")){
+            String stats = model.getSortedStatsFormatted();
+            String[] splitStats = stats.split("\\n");
+            String[] ttStats = new String[10];
+            for (int i = 1; i < (splitStats.length < 11 ? splitStats.length : 10); i++){
+                ttStats[i - 1] = splitStats[splitStats.length - i];
+            }
+            for(String string: ttStats)
+                System.out.println(string);
+
         }
+
     }
 }
 
