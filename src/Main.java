@@ -70,6 +70,12 @@ public class Main{
             for(String string: ttStats)
                 System.out.println(string);
 
+        } else if(input.equals("load")) {
+            try {
+                model.load("stats.txt");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
     }

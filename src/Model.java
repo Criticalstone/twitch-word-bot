@@ -1,6 +1,7 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Model {
@@ -19,6 +20,16 @@ public class Model {
             wordList.put(word, ++count);
         } else {
             wordList.put(word, 1l);
+        }
+    }
+
+    public void addWord(String word, long count){
+        word = word.toLowerCase();
+        if (wordList.containsKey(word)){
+            long oldCount = wordList.get(word);
+            wordList.put(word, oldCount+count);
+        } else {
+            wordList.put(word, count);
         }
     }
 
@@ -104,6 +115,14 @@ public class Model {
             writer.close();
         }catch (IOException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void load(String path) throws IOException{
+        Path filepath = FileSystems.getDefault().getPath(path);
+        ArrayList<String> Stringlist = (ArrayList)Files.readAllLines(filepath);
+        for (String line : Stringlist){
+            addWord(line.substring(0, line.indexOf(" : ")), Integer.parseInt(line.substring(line.indexOf(" : ") + 3)));
         }
     }
 
