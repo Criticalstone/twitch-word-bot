@@ -90,11 +90,9 @@ public class WhitelistSetting {
 				break;
 			case "enable":
 				this.enabled = true;
-                saveState();
 				break;
 			case "disable":
 				this.enabled = false;
-                saveState();
 				break;
 			case "clear":
 				this.whitelist.clear();
@@ -128,13 +126,13 @@ public class WhitelistSetting {
 		}
 	}
 	
-	private void loadState() {
+	private synchronized void loadState() {
         // Load whitelist
 		List<String> result = new ArrayList<>();
 		try (Scanner scanner = new Scanner(new FileInputStream(WHITELIST_FILE))) {
             scanner.forEachRemaining(result::add); // Le magic :D
 		} catch (IOException e) {
-            e.printStackTrace();
+            // Do nothing :)
         } finally {
             whitelist = result;
         }
@@ -145,11 +143,11 @@ public class WhitelistSetting {
             String enabledString = properties.getProperty(PROP_ENABLED, "true");
             this.enabled = enabledString.equals("true");
         } catch (IOException e) {
-            e.printStackTrace();
+            // Do nothing :)
         }
 	}
 	
-	private void saveState() {
+	private synchronized void saveState() {
         // Save whitelist
 		try (PrintWriter printer = new PrintWriter(new FileOutputStream(WHITELIST_FILE))){
            whitelist.forEach(printer::println); // Magic :D
