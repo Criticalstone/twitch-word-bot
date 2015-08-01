@@ -16,14 +16,16 @@ public class Twiddler extends PircBot{
 
     @Override
     protected void onMessage(String channel, String sender, String login, String hostname, String message) {
-
-        if(message.equals("bark")){
-            randomDelay();
-            sendMessage(channel, "Hi " + sender + "!");
-        }
-
-        if(message.equals("dc")){
-            disconnect();
+        
+        if (WhitelistSetting.getInstance().canCommand(sender)) {
+            if(message.equals("bark")){
+                randomDelay();
+                sendMessage(channel, "Hi " + sender + "!");
+            } else if (message.equals("dc")){
+                disconnect();
+            } else if (message.startsWith(WhitelistSetting.WHITELIST_PREFIX)) {
+                WhitelistSetting.getInstance().handle(message);
+            }
         }
 
         model.addSentence(message);
