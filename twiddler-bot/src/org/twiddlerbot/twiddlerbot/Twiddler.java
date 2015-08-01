@@ -1,9 +1,12 @@
+package org.twiddlerbot.twiddlerbot;
+
 import org.jibble.pircbot.PircBot;
 
 import java.util.Random;
 
 /**
- * Created by kritt on 7/24/15.
+ * @author Kevin Hoogendijk, Alexander Håkansson
+ * @since 2015-07-24
  */
 public class Twiddler extends PircBot{
     private Model model;

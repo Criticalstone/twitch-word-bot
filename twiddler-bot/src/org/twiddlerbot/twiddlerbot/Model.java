@@ -1,9 +1,15 @@
+package org.twiddlerbot.twiddlerbot;
+
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+/**
+ * @author Alexander Håkansson, Kevin Hoogendijk
+ * @since 2015-07-24
+ */
 public class Model {
     private final Map<String, Long> wordList;
     private final Set<OnModelDataChangedListener> listeners;
@@ -148,20 +154,20 @@ public class Model {
         }
         return stats;
     }
-}
 
-class ValueComparator implements Comparator<String> {
-    Map<String, Long> base;
-    public ValueComparator(Map<String, Long> base) {
-        this.base = base;
-    }
+    private class ValueComparator implements Comparator<String> {
+        Map<String, Long> base;
+        public ValueComparator(Map<String, Long> base) {
+            this.base = base;
+        }
 
-    @Override
-    public int compare(String a, String b) {
-        if(base.get(a) >= base.get(b)) {
-            return -1;
-        } else {
-            return 1;
+        @Override
+        public int compare(String a, String b) {
+            if(base.get(a) >= base.get(b)) {
+                return -1;
+            } else {
+                return 1;
+            }
         }
     }
 }

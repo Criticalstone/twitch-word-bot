@@ -1,10 +1,13 @@
+package org.twiddlerbot.twiddlerbot;
+
 import org.jibble.pircbot.IrcException;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Created by kritt on 7/24/15.
+ * @author Kevin Hoogendijk
+ * @since 2015-07-24
  */
 public class Main{
 

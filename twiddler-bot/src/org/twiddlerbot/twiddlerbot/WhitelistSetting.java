@@ -1,10 +1,12 @@
+package org.twiddlerbot.twiddlerbot;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
 * This class handles a whitelist of senders that can issue commands
-* to the Twiddler bot. Settings will be saved over sessions and if 
+* to the org.twiddlerbot.twiddlerbot.Twiddler bot. Settings will be saved over sessions and if
 * no one is added to the whitelist then anyone can issue commands.
 *
 * This whitelist is global over all channels and servers.
@@ -36,7 +38,7 @@ public class WhitelistSetting {
 	}	
 	
 	/**
-	* Determines wheter a sender can send commands to the Twiddler bot or not.
+	* Determines whether a sender can send commands to the Twiddler bot or not.
 	*
 	* @return Returns true if whitelist is empty or contains sender
 	*/
