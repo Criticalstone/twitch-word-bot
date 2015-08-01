@@ -19,13 +19,13 @@ public class Main{
         this.twiddler = new Twiddler(model);
 
         try {
-            twiddler.connect("irc.twitch.tv", 6667, "oauth:ickib8fp0msgt3le4zca7vxg31825j");
-            //twiddler.connect("irc.freenode.net");
+            //twiddler.connect("irc.twitch.tv", 6667, "oauth:ickib8fp0msgt3le4zca7vxg31825j");
+            twiddler.connect("irc.freenode.net");
         }catch(IOException | IrcException e){
             System.out.println(e.getMessage());
         }
 
-        twiddler.joinChannel("#smitegame");
+        twiddler.joinChannel("#twiddlertest");
 
         getInput();
     }

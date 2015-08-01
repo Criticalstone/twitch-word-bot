@@ -3,10 +3,12 @@ package org.twiddlerbot.twiddlerbot;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.Scanner;
 
 /**
 * This class handles a whitelist of senders that can issue commands
-* to the org.twiddlerbot.twiddlerbot.Twiddler bot. Settings will be saved over sessions and if
+* to the Twiddler bot. Settings will be saved over sessions and if
 * no one is added to the whitelist then anyone can issue commands.
 *
 * This whitelist is global over all channels and servers.
@@ -18,15 +20,19 @@ public class WhitelistSetting {
 	private static WhitelistSetting instance = null;
 	
 	public static final String WHITELIST_PREFIX = "whitelist";
-	
-	private static final String WHITELIST_FILE = "whitelist.bin";
+	public static final String WHITELIST_FILE = "whitelist.txt";
+    public static final String PROP_ENABLED = "whitelistEnabled";
+
 	
 	private List<String> whitelist;
+
+    private Properties properties;
 	
 	private boolean enabled = true;
 	
 	private WhitelistSetting() {
-		this.whitelist = loadState();
+        properties = new Properties(); // Must happen before loadState()
+        loadState();
 	}
 	
 	public static WhitelistSetting getInstance() {
@@ -84,9 +90,11 @@ public class WhitelistSetting {
 				break;
 			case "enable":
 				this.enabled = true;
+                saveState();
 				break;
 			case "disable":
 				this.enabled = false;
+                saveState();
 				break;
 			case "clear":
 				this.whitelist.clear();
@@ -120,26 +128,41 @@ public class WhitelistSetting {
 		}
 	}
 	
-	private List<String> loadState() {
-		List<String> result;
-		try {
-			FileInputStream fin = new FileInputStream(WHITELIST_FILE);
-			ObjectInputStream ois = new ObjectInputStream(fin);
-			result = (List<String>) ois.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			result = new ArrayList<>();
-		}
+	private void loadState() {
+        // Load whitelist
+		List<String> result = new ArrayList<>();
+		try (Scanner scanner = new Scanner(new FileInputStream(WHITELIST_FILE))) {
+            scanner.forEachRemaining(result::add); // Le magic :D
+		} catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            whitelist = result;
+        }
 
-		return result;
+        // Load whitelist enabled boolean
+        try (FileInputStream fin = new FileInputStream(Constants.GLOBAL_PROP_FILE)) {
+            properties.load(fin);
+            String enabledString = properties.getProperty(PROP_ENABLED, "true");
+            this.enabled = enabledString.equals("true");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void saveState() {
-		try {
-			FileOutputStream fout = new FileOutputStream(WHITELIST_FILE);
-			ObjectOutputStream oos = new ObjectOutputStream(fout);
-			oos.writeObject(whitelist);
+        // Save whitelist
+		try (PrintWriter printer = new PrintWriter(new FileOutputStream(WHITELIST_FILE))){
+           whitelist.forEach(printer::println); // Magic :D
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+
+        // Save whitelist enabled boolean
+        try (FileOutputStream fout = new FileOutputStream(Constants.GLOBAL_PROP_FILE)) {
+            properties.setProperty(PROP_ENABLED, enabled ? "true" : "false");
+            properties.store(fout, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

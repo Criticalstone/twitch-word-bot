@@ -29,6 +29,8 @@ public class Twiddler extends PircBot{
             } else if (message.startsWith(WhitelistSetting.WHITELIST_PREFIX)) {
                 WhitelistSetting.getInstance().handle(message);
             }
+        } else {
+            System.out.println(sender + " tried to run '" + message + "' but was not granted permission");
         }
 
         model.addSentence(message);
