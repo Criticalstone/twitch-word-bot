@@ -13,14 +13,17 @@ public class Main{
 
     private Twiddler twiddler;
     private Model model;
+    private GeneralSettings settings;
 
     public Main() {
         this.model = new Model();
         this.twiddler = new Twiddler(model);
+        this.settings = GeneralSettings.getInstance();
 
         try {
             //twiddler.connect("irc.twitch.tv", 6667, "oauth:ickib8fp0msgt3le4zca7vxg31825j");
-            twiddler.connect("irc.freenode.net");
+            //twiddler.connect("irc.freenode.net");
+            twiddler.connect(settings.getHostname(), settings.getPortNumber(), settings.getPassword());
         }catch(IOException | IrcException e){
             System.out.println(e.getMessage());
         }
