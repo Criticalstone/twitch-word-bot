@@ -1,4 +1,4 @@
-package org.twiddlerbot.twiddlerbot;
+package twiddlerbot;
 
 import java.io.*;
 import java.util.ArrayList;

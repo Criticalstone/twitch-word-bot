@@ -1,4 +1,4 @@
-package org.twiddlerbot.twiddlerbot;
+package twiddlerbot;
 
 import org.jibble.pircbot.PircBot;
 
