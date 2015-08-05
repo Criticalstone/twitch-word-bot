@@ -88,6 +88,5 @@ public class Main{
 }
 
 //TODO: Save event stats
-//TODO: top ten words
 //TODO: Sort stats on value
 
