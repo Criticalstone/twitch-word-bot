@@ -88,5 +88,3 @@ public class Main{
 }
 
 //TODO: Save event stats
-//TODO: Sort stats on value
-
