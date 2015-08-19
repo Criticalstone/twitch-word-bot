@@ -14,6 +14,7 @@ public class Main{
     private Twiddler twiddler;
     private Model model;
     private GeneralSettings settings;
+    private Event event;
 
     public Main() {
         this.model = new Model();
@@ -21,14 +22,12 @@ public class Main{
         this.settings = GeneralSettings.getInstance();
 
         try {
-            //twiddler.connect("irc.twitch.tv", 6667, "oauth:ickib8fp0msgt3le4zca7vxg31825j");
-            //twiddler.connect("irc.freenode.net");
             twiddler.connect(settings.getHostname(), settings.getPortNumber(), settings.getPassword());
         }catch(IOException | IrcException e){
             System.out.println(e.getMessage());
         }
 
-        twiddler.joinChannel("#twiddlertest");
+        twiddler.joinChannel("#imaqtpie");
 
         getInput();
     }
@@ -82,9 +81,26 @@ public class Main{
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+        } else if(input.equals("save")) {
+            model.save();
+        } else if (input.startsWith("startevent")) {
+            String[] inputArray = input.split(" ", 2);
+            if (inputArray.length > 1)
+                startEvent(inputArray[1]);
+        } else if (input.startsWith("stopevent")) {
+            stopEvent();
         }
 
     }
+
+    public void startEvent(String eventName){
+        event = new Event(model, eventName);
+    }
+
+    public void stopEvent(){
+        event.save();
+        model.removeListener(event);
+    }
 }
 
-//TODO: Save event stats
+//TODO: Save event stats2

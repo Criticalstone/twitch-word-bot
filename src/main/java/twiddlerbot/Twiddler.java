@@ -5,7 +5,7 @@ import org.jibble.pircbot.PircBot;
 import java.util.Random;
 
 /**
- * @author Kevin Hoogendijk, Alexander Håkansson
+ * @author Kevin Hoogendijk, Alexander HÃ¥kansson
  * @since 2015-07-24
  */
 public class Twiddler extends PircBot{

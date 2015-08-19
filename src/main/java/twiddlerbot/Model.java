@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 /**
- * @author Alexander Håkansson, Kevin Hoogendijk
+ * @author Alexander HÃ¥kansson, Kevin Hoogendijk
  * @since 2015-07-24
  */
 public class Model {
@@ -20,28 +20,26 @@ public class Model {
     }
 
     public void addWord(String word) {
-        word = word.toLowerCase();
-        if (wordList.containsKey(word)) {
-            long count = wordList.get(word);
-            wordList.put(word, ++count);
-        } else {
-            wordList.put(word, 1l);
-        }
+        addWord(word, 1);
     }
 
     public void addWord(String word, long count){
+        long oldCount = getCountForWord(word);
         word = word.toLowerCase();
         if (wordList.containsKey(word)){
-            long oldCount = wordList.get(word);
-            wordList.put(word, oldCount+count);
+            long tempCount = wordList.get(word);
+            wordList.put(word, tempCount+count);
         } else {
             wordList.put(word, count);
         }
+        notifyListeners(word, getCountForWord(word), oldCount);
     }
 
     public Map<String, Long> getWordList() {
         return this.wordList;
     }
+
+    public Map<String, Long> getEventWordList() {return this.wordList; }
 
     public long getCountForWord(String word) {
         if (wordList.containsKey(word)) {
@@ -116,9 +114,9 @@ public class Model {
 
     public void save(){
         try {
-            PrintWriter writer = new PrintWriter("stats.txt");
-            writer.print(getStatsFormatted());
-            writer.close();
+            PrintWriter globalWriter = new PrintWriter(Constants.GLOBAL_STATS_FILE);
+            globalWriter.print(getStatsFormatted(wordList));
+            globalWriter.close();
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -147,9 +145,9 @@ public class Model {
         return stats;
     }
 
-    public String getStatsFormatted(){
+    public String getStatsFormatted(Map<String, Long> wordList){
         String stats = "";
-        for(String string: getWordList().keySet()){
+        for(String string: wordList.keySet()){
             stats += string + " : " + getCountForWord(string) + "\n";
         }
         return stats;
