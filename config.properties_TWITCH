@@ -1,0 +1,5 @@
+# config for connecting to twitch
+host=irc.twitch.tv
+port=6667
+password=oauth:ickib8fp0msgt3le4zca7vxg31825j
+whitelistEnabled=true
